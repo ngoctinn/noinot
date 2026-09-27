@@ -594,3 +594,4 @@ Nối Nốt dựa trên một giả thuyết:
 > Những phần khác nhau của đời sống cần các ứng dụng chuyên biệt, nhưng không nhất thiết phải tồn tại trong những silo context hoàn toàn độc lập.
 
 Dự án cần kiểm chứng liệu một shared context layer có thể tạo ra đủ giá trị mà không làm tăng quá nhiều độ phức tạp cho người dùng.
+
