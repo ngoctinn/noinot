@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="2048" viewBox="0 0 2048 2048" fill="none">
+  <g id="mark" fill="#000000" fill-rule="evenodd">
+    <!-- Left N glyph group -->
+    <g id="glyph-left">
+      <!-- Body of left N -->
+      <path id="glyph-left-body" d="
+        M 330 410
+        L 330 1581
+        L 430 1581
+        L 430 597
+        L 804 1191
+        L 870 1191
+        L 870 999
+        L 925 999
+        L 925 1465
+        L 842 1464
+        L 533 986
+        L 533 1137
+        L 855 1638
+        L 974 1638
+        L 974 410
+        L 767 410
+        L 767 948
+        L 430 410
+        Z
+      " />
+      <!-- Left connection node circle -->
+      <circle id="node-left" cx="380" cy="1581" r="123" />
+    </g>
+
+    <!-- Right N glyph group -->
+    <g id="glyph-right">
+      <!-- Body of right N with inner slot -->
+      <path id="glyph-right-body" d="
+        M 1718 1638
+        L 1718 467
+        L 1618 467
+        L 1618 1446
+        L 1246 860
+        L 1178 855
+        L 1178 545
+        L 1515 1061
+        L 1515 884
+        L 1209 410
+        L 1074 410
+        L 1074 1638
+        L 1276 1638
+        L 1277 1092
+        L 1622 1638
+        Z
+        M 1123 1177
+        L 1177 1177
+        L 1177 1530
+        L 1123 1530
+        Z
+      " />
+      <!-- Right connection node circle -->
+      <circle id="node-right" cx="1668" cy="467" r="123" />
+    </g>
+  </g>
+</svg>

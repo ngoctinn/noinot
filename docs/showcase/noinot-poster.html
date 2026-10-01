@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nối Nốt - Poster</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <style>
+      :root {
+        --bg: #08090d;
+        --panel: #11131a;
+        --panel-border: rgba(255, 255, 255, 0.08);
+        --fg: #ffffff;
+        --fg-secondary: #e2e8f0;
+        --muted: #8b92a5;
+        --dim: #4d5467;
+        --brand-node: #38bdf8;
+        --accent: #818cf8;
+        --line: rgba(255, 255, 255, 0.06);
+
+        --w: 1200px;
+        --h: 630px;
+        --page-w: 1200px;
+        --page-h: 630px;
+        --u: 6.3px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000000;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: var(--fg);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* Preview mode */
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #181920;
+        padding: 24px;
+      }
+
+      .stage {
+        overflow: hidden;
+      }
+
+      .poster {
+        position: relative;
+        width: var(--w);
+        height: var(--h);
+        overflow: hidden;
+        display: flex;
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(circle at 82% 40%, rgba(99, 102, 241, 0.12) 0%, rgba(56, 189, 248, 0.04) 35%, transparent 65%),
+          radial-gradient(circle at 15% 85%, rgba(255, 255, 255, 0.03) 0%, transparent 45%),
+          linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+        transform-origin: 0 0;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      /* Capture / headless print mode */
+      body.capture {
+        background: none;
+        display: block;
+        min-height: 0;
+        padding: 0;
+      }
+
+      body.capture .stage {
+        width: auto !important;
+        height: auto !important;
+      }
+
+      body.capture .poster {
+        transform: none !important;
+        border: none;
+      }
+
+      @media print {
+        body {
+          background: none;
+          display: block;
+          min-height: 0;
+          padding: 0;
+        }
+        .stage {
+          width: auto !important;
+          height: auto !important;
+        }
+        .poster {
+          transform: none !important;
+          width: var(--page-w);
+          height: var(--page-h);
+          border: none;
+        }
+      }
+
+      /* Inner layout structure */
+      .layout-container {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        width: 100%;
+        height: 100%;
+        padding: calc(var(--u) * 9) calc(var(--u) * 10);
+        gap: calc(var(--u) * 6);
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Left Column: Brand & Copy */
+      .col-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .badge-category {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: calc(var(--u) * 1.8);
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--fg-secondary);
+        width: fit-content;
+      }
+
+      .badge-category .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: var(--brand-node);
+        box-shadow: 0 0 8px var(--brand-node);
+      }
+
+      .hero-text {
+        margin-top: calc(var(--u) * 3);
+        display: flex;
+        flex-direction: column;
+        gap: calc(var(--u) * 2);
+      }
+
+      .title {
+        font-size: calc(var(--u) * 11);
+        font-weight: 800;
+        line-height: 1.0;
+        letter-spacing: -0.04em;
+        color: #ffffff;
+      }
+
+      .tagline {
+        font-size: calc(var(--u) * 3.8);
+        font-weight: 600;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+        color: var(--fg-secondary);
+      }
+
+      .desc {
+        font-size: calc(var(--u) * 2.3);
+        font-weight: 400;
+        line-height: 1.6;
+        color: var(--muted);
+        max-width: 480px;
+        margin-top: calc(var(--u) * 0.5);
+      }
+
+      .primitives-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
+        padding: calc(var(--u) * 1.8) calc(var(--u) * 2.4);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: fit-content;
+        max-width: 520px;
+      }
+
+      .primitives-label {
+        font-size: calc(var(--u) * 1.4);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--dim);
+      }
+
+      .primitives-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 12px;
+        font-size: calc(var(--u) * 1.9);
+        font-weight: 500;
+        color: var(--fg-secondary);
+      }
+
+      .primitives-list .sep {
+        color: var(--dim);
+        font-size: 0.8em;
+      }
+
+      .meta-footer {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: calc(var(--u) * 1.8);
+        color: var(--dim);
+        font-weight: 500;
+      }
+
+      .meta-footer .highlight {
+        color: var(--muted);
+      }
+
+      /* Right Column: Visual Center */
+      .col-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .visual-frame {
+        width: 100%;
+        max-width: 440px;
+        height: 100%;
+        background: rgba(14, 16, 23, 0.7);
+        border: 1px solid var(--panel-border);
+        border-radius: 24px;
+        padding: calc(var(--u) * 3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7);
+      }
+
+      .frame-header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: calc(var(--u) * 1.5);
+        font-size: calc(var(--u) * 1.5);
+        font-weight: 500;
+        color: var(--dim);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--muted);
+      }
+
+      .status-pill::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: var(--brand-node);
+      }
+
+      .mark-stage {
+        position: relative;
+        width: 260px;
+        height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Ambient halo behind logo */
+      .mark-stage::before {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(99, 102, 241, 0.08) 50%, transparent 70%);
+        filter: blur(24px);
+        z-index: 0;
+      }
+
+      /* SVG Mark styling */
+      .svg-mark {
+        position: relative;
+        z-index: 1;
+        width: 240px;
+        height: 240px;
+        filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.5));
+      }
+
+      .svg-mark #glyph-left-body,
+      .svg-mark #glyph-right-body {
+        fill: #ffffff;
+      }
+
+      .svg-mark #node-left {
+        fill: #38bdf8;
+      }
+
+      .svg-mark #node-right {
+        fill: #818cf8;
+      }
+
+      .frame-footer {
+        width: 100%;
+        border-top: 1px solid var(--line);
+        padding-top: calc(var(--u) * 1.5);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: calc(var(--u) * 1.5);
+        color: var(--dim);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      }
+
+      /* Subtle decorative corner crosses */
+      .cross {
+        position: absolute;
+        width: 9px;
+        height: 9px;
+        pointer-events: none;
+      }
+      .cross::before, .cross::after {
+        content: "";
+        position: absolute;
+        background: rgba(255, 255, 255, 0.15);
+      }
+      .cross::before { top: 4px; left: 0; width: 9px; height: 1px; }
+      .cross::after { top: 0; left: 4px; width: 1px; height: 9px; }
+      .cross-tl { top: 18px; left: 18px; }
+      .cross-tr { top: 18px; right: 18px; }
+      .cross-bl { bottom: 18px; left: 18px; }
+      .cross-br { bottom: 18px; right: 18px; }
+    </style>
+  </head>
+  <body>
+    <div class="stage">
+      <div id="poster" class="poster">
+        <div class="cross cross-tl"></div>
+        <div class="cross cross-tr"></div>
+        <div class="cross cross-bl"></div>
+        <div class="cross cross-br"></div>
+
+        <div class="layout-container">
+          <!-- Left Column -->
+          <div class="col-left">
+            <div class="badge-category">
+              <span class="dot"></span>
+              <span data-str="category"></span>
+            </div>
+
+            <div class="hero-text">
+              <div class="title" data-str="title"></div>
+              <div class="tagline" data-str="tagline"></div>
+              <div class="desc" data-str="desc"></div>
+            </div>
+
+            <div class="primitives-card">
+              <div class="primitives-label" data-str="primitivesLabel"></div>
+              <div class="primitives-list">
+                <span>Entities</span>
+                <span class="sep">/</span>
+                <span>Relationships</span>
+                <span class="sep">/</span>
+                <span>Events</span>
+                <span class="sep">/</span>
+                <span>Actions</span>
+                <span class="sep">/</span>
+                <span>Time</span>
+              </div>
+            </div>
+
+            <div class="meta-footer">
+              <span class="highlight" data-str="metaBrand"></span>
+              <span>·</span>
+              <span data-str="metaUrl"></span>
+            </div>
+          </div>
+
+          <!-- Right Column -->
+          <div class="col-right">
+            <div class="visual-frame">
+              <div class="frame-header">
+                <span class="status-pill">CONNECTED · PRECISE</span>
+                <span>2048 × 2048</span>
+              </div>
+
+              <div class="mark-stage">
+                <!-- Inline SVG vector of Nối Nốt logo with connection nodes -->
+                <svg class="svg-mark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" fill="none">
+                  <!-- Connection line between left & right nodes -->
+                  <line x1="380" y1="1581" x2="1668" y2="467" stroke="rgba(255, 255, 255, 0.15)" stroke-width="12" stroke-dasharray="24 16" />
+                  <circle cx="1024" cy="1024" r="28" fill="rgba(255, 255, 255, 0.2)" />
+                  <g id="mark" fill-rule="evenodd">
+                    <!-- Left N glyph group -->
+                    <g id="glyph-left">
+                      <path id="glyph-left-body" d="
+                        M 330 410
+                        L 330 1581
+                        L 430 1581
+                        L 430 597
+                        L 804 1191
+                        L 870 1191
+                        L 870 999
+                        L 925 999
+                        L 925 1465
+                        L 842 1464
+                        L 533 986
+                        L 533 1137
+                        L 855 1638
+                        L 974 1638
+                        L 974 410
+                        L 767 410
+                        L 767 948
+                        L 430 410
+                        Z
+                      " />
+                      <circle id="node-left" cx="380" cy="1581" r="123" />
+                    </g>
+
+                    <!-- Right N glyph group -->
+                    <g id="glyph-right">
+                      <path id="glyph-right-body" d="
+                        M 1718 1638
+                        L 1718 467
+                        L 1618 467
+                        L 1618 1446
+                        L 1246 860
+                        L 1178 855
+                        L 1178 545
+                        L 1515 1061
+                        L 1515 884
+                        L 1209 410
+                        L 1074 410
+                        L 1074 1638
+                        L 1276 1638
+                        L 1277 1092
+                        L 1622 1638
+                        Z
+                        M 1123 1177
+                        L 1177 1177
+                        L 1177 1530
+                        L 1123 1530
+                        Z
+                      " />
+                      <circle id="node-right" cx="1668" cy="467" r="123" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+
+              <div class="frame-footer">
+                <span>NODE [380, 1581]</span>
+                <span>NODE [1668, 467]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const Q = new URLSearchParams(location.search);
+      const CAPTURE = Q.get("capture") === "1";
+
+      const STR = {
+        vi: {
+          name: "Nối Nốt",
+          category: "Nền tảng context chung",
+          title: "Nối Nốt",
+          tagline: "Nhiều ứng dụng. Một context chung.",
+          desc: "Giữ trọn liên kết và ngữ cảnh giữa các phần của đời sống thay vì phân mảnh dữ liệu.",
+          primitivesLabel: "Shared Context Primitives",
+          metaBrand: "noinot",
+          metaUrl: "github.com/ngoctinn/noinot",
+        },
+        en: {
+          name: "Nối Nốt",
+          category: "Shared Context Platform",
+          title: "Nối Nốt",
+          tagline: "Multiple apps. One shared context.",
+          desc: "Preserving connections and context across different parts of life instead of siloed data.",
+          primitivesLabel: "Shared Context Primitives",
+          metaBrand: "noinot",
+          metaUrl: "github.com/ngoctinn/noinot",
+        }
+      };
+
+      const LANGS = Object.keys(STR);
+      const LANG = STR[Q.get("lang")] ? Q.get("lang") : LANGS[0];
+
+      const FONT_LIST = [
+        { family: "Inter", weight: 400 },
+        { family: "Inter", weight: 500 },
+        { family: "Inter", weight: 600 },
+        { family: "Inter", weight: 700 },
+        { family: "Inter", weight: 800 },
+      ];
+      const FONT_SAMPLE = "Aa Tiếng Việt ạ ố ữ ăâđêôơư ẤỆỮ";
+
+      const SIZES = {
+        A4: { w: 794, h: 1123, page: ["210mm", "297mm"] },
+        A3: { w: 1123, h: 1587, page: ["297mm", "420mm"] },
+        letter: { w: 816, h: 1056, page: ["8.5in", "11in"] },
+      };
+
+      const SIZE = (() => {
+        const q = Q.get("size") || "1200x630";
+        if (SIZES[q]) return SIZES[q];
+        const m = /^(\d+)x(\d+)$/.exec(q);
+        if (!m) console.warn(`poster: unknown size "${q}", using 1200x630`);
+        const [w, h] = m ? [+m[1], +m[2]] : [1200, 630];
+        return { w, h, page: [`${w}px`, `${h}px`] };
+      })();
+      const W = SIZE.w, H = SIZE.h;
+
+      const root = document.documentElement;
+      const body = document.body;
+      const frame = document.getElementById("poster");
+
+      if (CAPTURE) body.classList.add("capture");
+      root.lang = LANG;
+      root.style.setProperty("--w", `${W}px`);
+      root.style.setProperty("--h", `${H}px`);
+      root.style.setProperty("--page-w", SIZE.page[0]);
+      root.style.setProperty("--page-h", SIZE.page[1]);
+
+      const pageRule = document.createElement("style");
+      pageRule.textContent = `@page { size: ${SIZE.page[0]} ${SIZE.page[1]}; margin: 0 }`;
+      document.head.append(pageRule);
+
+      // Copy injection via textContent
+      const lookup = (key) =>
+        key.split(".").reduce((o, k) => (o == null ? o : o[k]), STR[LANG]);
+      for (const el of document.querySelectorAll("[data-str]")) {
+        const value = lookup(el.dataset.str);
+        if (value === undefined)
+          console.warn(`poster: missing string "${el.dataset.str}" (${LANG})`);
+        el.textContent = value || "";
+        el.hidden = !value;
+      }
+      document.title = `${lookup("name") || "Poster"} - Nối Nốt`;
+
+      // Layout fit & unit calculations
+      const BASE = Math.min(Math.sqrt(W * H), Math.min(W, H) * 1.25) / 100;
+      const setUnit = (scale) =>
+        root.style.setProperty("--u", `${BASE * scale}px`);
+
+      function overflows() {
+        if (
+          frame.scrollHeight > frame.clientHeight + 1 ||
+          frame.scrollWidth > frame.clientWidth + 1
+        )
+          return true;
+        return [...frame.querySelectorAll("[data-str]:not([hidden])")].some(
+          (el) => el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1,
+        );
+      }
+
+      function fit() {
+        let scale = 1;
+        setUnit(scale);
+        while (overflows() && scale > 0.6) {
+          scale = Math.round((scale - 0.04) * 100) / 100;
+          setUnit(scale);
+        }
+        if (scale < 0.8)
+          console.warn(`poster: type shrunk to ${Math.round(scale * 100)}% to fit`);
+        if (overflows())
+          console.warn("poster: content still overflows the frame; cut the copy");
+      }
+
+      function preview() {
+        const s = Math.min(1, (innerWidth - 48) / W, (innerHeight - 48) / H);
+        frame.style.transform = `scale(${s})`;
+        frame.parentElement.style.width = `${W * s}px`;
+        frame.parentElement.style.height = `${H * s}px`;
+      }
+
+      const ready = (async () => {
+        try {
+          await Promise.all(
+            FONT_LIST.map(({ family, weight }) =>
+              document.fonts.load(`${weight} 64px "${family}"`, FONT_SAMPLE),
+            ),
+          );
+          await document.fonts.ready;
+        } catch (e) {
+          console.warn("font load failed:", e && e.message);
+        }
+        fit();
+        if (!CAPTURE) {
+          preview();
+          addEventListener("resize", preview);
+        }
+      })();
+
+      window.__showcase = {
+        ready,
+        width: W,
+        height: H,
+        fonts: FONT_LIST,
+        fontSample: FONT_SAMPLE,
+        lang: LANG,
+      };
+    </script>
+  </body>
+</html>
